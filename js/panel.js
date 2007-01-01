@@ -1,153 +1,62 @@
 // Open a websocket with the server
 var wsCommand = new WebSocket("ws://" + location.host + "/websocket");
-var thumbSize=128;
-var slideList=[];
 
-var slides=[
-	["Copertina generica","banner1.jpg","none","none"],
-	["Copertina Auditorium","banner1.jpg","Auditorium di Santa Scolastica","5-8 Settembre 2013"],
-	["Infopoint 1","wifiinfopoint.jpg","none","none"],
-	["Casularo/Damiani","casularo_damiani.jpg","E. Casularo, A. Damiani","Flauto e Liuto"],
-	["Segre","segre1.jpg","Emanuele Segre","Chitarra Classica"],
-	["Gallucci","gallucci1.jpg","Leonardo Gallucci","Chitarra Classica"],
-	["Cafiso","cafiso1.jpg","Francesco Cafiso","Sax"],
-	["Milici/Buzzurro/Cafiso","milici_buzzurro_cafiso.jpg","G.Milici, F.Buzzurro, F.Cafiso","Chitarra, Sax, Armonica"],
-	["Finger","finger1.jpg","Peter Finger","Chitarra Finger Picking"],
-	["Segre/Veneziano","segre_veneziano.jpg","E. Segre, I. Veneziano","Pianoforte e Chitarra Classica"],
-	["Veneziano","veneziano1.jpg","Irene Veneziano","Pianoforte"],
-	["Borda/Palombo","borda_palombo.jpg","L. Borda, G. Palombo","Duo acustico"],
-	["Borda","borda1.jpg","Luis Borda","Chitarra Classica"],
-	["Palombo","palombo1.jpg","Giovanni Palombo","Chitarra Acustica"],
-	["Buzzurro","buzzurro1.jpg","Francesco Buzzurro","Chitarra Classica"],
+var sfondi=[
+	["banner1.jpg","",""],
+	["banner1.jpg","Auditorium di Santa Scolastica","5-8 Settembre 2013"],
+	["wifiinfopoint.jpg","",""],
 ];
 
-function liveAll() {
-	wsCommand.send('{"cmd":"titolo_1","text":"' + $("#titolo_1_text").val() + '"}');
-	wsCommand.send('{"cmd":"titolo_2","text":"' + $("#titolo_2_text").val() + '"}');
-}
+var artisti=[
+	["casularo_damiani.jpg","E. Casularo, A. Damiani","Flauto e Liuto"],
+	["segre1.jpg","Emanuele Segre","Chitarra Classica"],
+	["gallucci1.jpg","Leonardo Gallucci","Chitarra Classica"],
+	["cafiso1.jpg","Francesco Cafiso","Sax"],
+	["milici_buzzurro_cafiso.jpg","G.Milici, F.Buzzurro, F.Cafiso","Chitarra, Sax, Armonica"],
+	["finger1.jpg","Peter Finger","Chitarra Finger Picking"],
+	["segre_veneziano.jpg","E. Segre, I. Veneziano","Pianoforte e Chitarra Classica"],
+	["veneziano1.jpg","Irene Veneziano","Pianoforte"],
+	["borda_palombo.jpg","L. Borda, G. Palombo","Duo acustico"],
+	["borda1.jpg","Luis Borda","Chitarra Classica"],
+	["palombo1.jpg","Giovanni Palombo","Chitarra Acustica"],
+	["buzzurro1.jpg","Francesco Buzzurro","Chitarra Classica"],
+];
 
-function sendSlide(slide) {
-	wsCommand.send('{"cmd":"slide","slide":"/artisti/' + slide + '"}');
-}
+var veneziano=[
+	["galluppi1.jpg","Sonata n.5 in Do maggiore","(Baldassare Galluppi 1706-1785)"],
+	["respighi1.jpg","Notturno","(Ottorino Respighi 1879-1936)"],
+	["chopin1.jpg","Scherzo op 31","(Fryderyk Chopin 1810-1849)"],
+	["camille1.jpg","Etude op 111 n.6 Toccata","(Camille Saint-Saens 1835-1921)"],
+];
 
-function ShowSlidesThumbnail() {
+function ShowSlidesThumbnail(slide_div,slide_array) {
 	var contents="";
 	
-	contents+="<table>";
-	for (var i= 0; i < slides.length; i++) {
-		contents+="<tr>";
-		contents+="<td>";
-		contents+="<img class='slide' value='" + i +"' src='/slides_thumb/" + slides[i][1] + "' title='" + slides[i][1] + "'/>";
-		contents+="</td>";
-		contents+="<td>";
-		contents+=slides[i][0];
+	for (var i= 0; i < slide_array.length; i++) {
+		contents+="<img class='slide' src='/slides_thumb/" + slide_array[i][0] + "' title='" + slide_array[i][0] + "'/>";
 		contents+="<br/>";
-		contents+=slides[i][2];
+		contents+="<input type='text' size='80' value='" + slide_array[i][1] + "'/>";
 		contents+="<br/>";
-		contents+=slides[i][3];
-		contents+="</td>";
-		contents+="</tr>";
+		contents+="<input type='text' size='80' value='" + slide_array[i][2] + "'/>";
+		contents+="<br/>";
 	}
-	contents+="</table>";
 	
-	$("#thumbnaillist").html(contents);
-
-	$(".slide").click(function() {
-		titolo_1=slides[$(this).attr("value")][2];
-		titolo_2=slides[$(this).attr("value")][3];
-
-		if (titolo_1=="none") {
-			$("#titolo_1_text").val("");
-		} else {
-			$("#titolo_1_text").val(titolo_1);
-		}	
-
-		if (titolo_2=="none") {
-			$("#titolo_2_text").val("");
-		} else {
-			$("#titolo_2_text").val(titolo_2);
-		}	
-
-		wsCommand.send('{"cmd":"titolo_1","text":"' + $("#titolo_1_text").val() + '"}');
-		wsCommand.send('{"cmd":"titolo_2","text":"' + $("#titolo_2_text").val() + '"}');
-		wsCommand.send('{"cmd":"slide","image":"' + '/slides/' + $(this).attr("title") + '"}');
-	});
-
-}
-
-function ShowThumbnail(slideslist) {
-	RefreshThumbnail(slideslist);
-
-	$(window).resize(function() {
-		console.log($(document).width());
-		RefreshThumbnail(slideslist);
-	});
-	
-	$("#titolo_1_live").click(function() {
-		wsCommand.send('{"cmd":"titolo_1","text":"' + $("#titolo_1_text").val() + '"}');
-	});
-	$("#titolo_2_live").click(function() {
-		wsCommand.send('{"cmd":"titolo_2","text":"' + $("#titolo_2_text").val() + '"}');
-	});
-	$(".select_text").click(function() {
-		titolo_1=$(this).find('option:selected').text();
-		titolo_2=$(this).val();
-		if (titolo_2=="notext") {
-			$("#titolo_1_text").val("");
-			$("#titolo_2_text").val("");
-		} else {
-			$("#titolo_1_text").val(titolo_1);
-			$("#titolo_2_text").val(titolo_2);
-		}	
-		liveAll();
-		slide_name=$(this).find('option:selected').attr("name");
-		if (slide_name!=undefined) {
-			sendSlide(slide_name);
-		} else {
-			sendSlide("banner1.jpg");
-		}	
-	});
-
-	$(".button_slide").click(function() {
-		titolo_1=$(this).text();
-		titolo_2=$(this).val();
-		if (titolo_2=="notext") {
-			$("#titolo_1_text").val("");
-			$("#titolo_2_text").val("");
-		} else {
-			$("#titolo_1_text").val(titolo_1);
-			$("#titolo_2_text").val(titolo_2);
-		}	
-		liveAll();
-		slide_name=$(this).attr("name");
-		if (slide_name!=undefined) {
-			sendSlide(slide_name);
-		} else {
-			sendSlide("banner1.jpg");
-		}	
-	});
-
+	$(slide_div).html(contents);
 }
 
 $(document).ready(function() {
 	$("#tabs").tabs();
-	ShowSlidesThumbnail();
-	
-	// Load the slides list
-	/*
-	$.ajax({
-		dataType: "json",
-		url: "/slideslist",
-		type: "get",
-		success: function (data,stato) {
-			slideslist=data;
-			ShowThumbnail(slideslist);
-	    },
-    	error: function (richiesta,stato,errori) {
-        	alert("Error: " + stato);
-    	}
+	ShowSlidesThumbnail("#sfondi",sfondi);
+	ShowSlidesThumbnail("#artisti",artisti);
+	ShowSlidesThumbnail("#veneziano",veneziano);
+
+	$(".slide").click(function() {
+		titolo_1=$(this).next().next().val();
+		titolo_2=$(this).next().next().next().next().val();
+		wsCommand.send('{"cmd":"titolo_1","text":"' + titolo_1 + '"}');
+		wsCommand.send('{"cmd":"titolo_2","text":"' + titolo_2 + '"}');
+		wsCommand.send('{"cmd":"slide","image":"' + '/slides/' + $(this).attr("title") + '"}');
 	});
-	*/
 
 	$("#poll").click(function() {
 		wsCommand.send('{"cmd":"poll","text":"Vota il BIS !!"}');

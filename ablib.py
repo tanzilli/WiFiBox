@@ -1,4 +1,4 @@
-# ablib.py
+# ablib.py 
 #
 # Python functions collection to easily manage the I/O lines and 
 # Daisy modules with the following Acme Systems boards:
@@ -16,6 +16,7 @@
 
 try:
 	import os.path
+	import platform
 	import smbus
 	import time
 	from serial import Serial
@@ -27,6 +28,10 @@ try:
 except:
 	pass
 
+if platform.platform().find("Linux-2")!=-1:
+	legacy_id=True
+else: 	
+	legacy_id=False
 
 serial_ports = {
 	'D1' :  '/dev/ttyS2',
@@ -39,7 +44,6 @@ serial_ports = {
 	'D13':  '/dev/ttyS2'
 }
 
-		
 # Connectors pin assignments
 # 'pin name', 'kernel id'  # pin description
 
@@ -309,7 +313,7 @@ D10_kernel_ids = {
 
 #Terra D11
 D11_kernel_ids = {
-	'1' :   0, #3V3
+	'1' :   0,  #3V3
 	'2' : 112, #PC16
 	'3' : 113, #PC17
 	'4' : 114, #PC18
@@ -389,7 +393,8 @@ D16_kernel_ids = {
 	'8' :  63, #PA31.
 	'9' :  60, #PA28
 	'10':   0, #GND
-}
+}	
+
 
 # Kernel IDs descriptors for each connector
 connectors = {
@@ -416,32 +421,62 @@ connectors = {
 	'D16' :  D16_kernel_ids,
 }
 
+
+def get_gpio_path(kernel_id):
+	global legacy_id
+	kernel_id=kernel_id-32	
+	
+	if (legacy_id==True):
+		iopath="/sys/class/gpio/gpio%d" % (kernel_id+32)
+		
+	if (legacy_id==False):
+		iopath="/sys/class/gpio/pio" 
+		if kernel_id>=0 and kernel_id<=31:
+			iopath="%sA%d" % (iopath,kernel_id-0)
+		if kernel_id>=32 and kernel_id<=63:
+			iopath="%sB%d" % (iopath,kernel_id-32)
+		if kernel_id>=64 and kernel_id<=95:
+			iopath="%sC%d" % (iopath,kernel_id-64)
+			
+	return iopath		
+			
+
 def get_kernel_id(connector_name,pin_number):
 	return connectors[connector_name][pin_number]
 
 def export(kernel_id):
-	iopath='/sys/class/gpio/gpio' + str(kernel_id)
+	global legacy_id
+
+	iopath=get_gpio_path(kernel_id)
 	if not os.path.exists(iopath): 
 		f = open('/sys/class/gpio/export','w')
-		f.write(str(kernel_id))
+		if (legacy_id==True):
+			f.write(str(kernel_id))
+		else:
+			f.write(str(kernel_id-32))
 		f.close()
 
 def unexport(kernel_id):
-	iopath='/sys/class/gpio/gpio' + str(kernel_id)
+	global legacy_id
+
+	iopath=get_gpio_path(kernel_id)
 	if os.path.exists(iopath): 
 		f = open('/sys/class/gpio/unexport','w')
-		f.write(str(kernel_id))
+		if (legacy_id==True):
+			f.write(str(kernel_id))
+		else:
+			f.write(str(kernel_id-32))
 		f.close()
 
 def direction(kernel_id,direct):
-	iopath='/sys/class/gpio/gpio' + str(kernel_id)
+	iopath=get_gpio_path(kernel_id)
 	if os.path.exists(iopath): 
 		f = open(iopath + '/direction','w')
 		f.write(direct)
 		f.close()
 
 def set_value(kernel_id,value):
-	iopath='/sys/class/gpio/gpio' + str(kernel_id)
+	iopath=get_gpio_path(kernel_id)
 	if os.path.exists(iopath): 
 		f = open(iopath + '/value','w')
 		f.write(str(value))
@@ -449,7 +484,7 @@ def set_value(kernel_id,value):
 
 def get_value(kernel_id):
 	if kernel_id<>-1:
-		iopath='/sys/class/gpio/gpio' + str(kernel_id)
+		iopath=get_gpio_path(kernel_id)
 		if os.path.exists(iopath): 
 			f = open(iopath + '/value','r')
 			a=f.read()
@@ -457,7 +492,7 @@ def get_value(kernel_id):
 			return int(a)
 
 def set_edge(kernel_id,value):
-	iopath='/sys/class/gpio/gpio' + str(kernel_id)
+	iopath=get_gpio_path(kernel_id)
 	if os.path.exists(iopath): 
 		if value in ('none', 'rising', 'falling', 'both'):
 		    f = open(iopath + '/edge','w')
@@ -503,8 +538,8 @@ class Pin():
 		self.kernel_id=get_kernel_id(connector_id,pin_name)
 		export(self.kernel_id)
 		direction(self.kernel_id,direct)
-		
-		iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
+
+		iopath=get_gpio_path(self.kernel_id)
 		if os.path.exists(iopath): 
 			self.fd = open(iopath + '/value','r')
 
@@ -690,7 +725,7 @@ class Daisy5():
 			export(self.kernel_id)
 			direction(self.kernel_id,'in')
 
-			iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
+			iopath=get_gpio_path(self.kernel_id)
 			if os.path.exists(iopath): 
 				self.fd = open(iopath + '/value','r')
 
@@ -765,7 +800,7 @@ class Daisy8():
 			export(self.kernel_id)
 			direction(self.kernel_id,'in')
 
-			iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
+			iopath=get_gpio_path(self.kernel_id)
 			if os.path.exists(iopath): 
 				self.fd = open(iopath + '/value','r')
 
@@ -790,12 +825,6 @@ class Daisy8():
 			else:
 				return True
 		return False
-
-#	def get(self):
-#		if get_value(self.kernel_id):
-#			return True
-#		else:
-#			return False
 			
 	def wait_edge(self,fd,callback):
 		counter=0	
@@ -817,7 +846,7 @@ class Daisy8():
 			
 
 
-class Daisy10(Serial):
+class Daisy10():
 
 	"""
 	DAISY-10 (RS422/RS485) related class
@@ -1057,9 +1086,10 @@ class Daisy18():
 	http://www.acmesystems.it/DAISY-18
 	"""
 
+	fd=None
 	kernel_id=-1
 
-	inputs_first = {
+	line_first = {
 		'CH1' :  '2',
 		'CH2' :  '3',
 		'CH3' :  '4',
@@ -1070,7 +1100,7 @@ class Daisy18():
 		'I4'  :  '5'
 	}
 
-	inputs_second = {
+	line_second = {
 		'CH1' :  '6',
 		'CH2' :  '7',
 		'CH3' :  '8',
@@ -1081,30 +1111,54 @@ class Daisy18():
 		'I4'  :  '9'
 	}
 
-	def __init__(self,connector_id,position,inputs_id):
-		if (position=="first"): 
-			pin=self.inputs_first[inputs_id]
-		else:
-			pin=self.inputs_second[inputs_id]
-			
-		self.kernel_id = get_kernel_id(connector_id,pin)
 
-		if (self.kernel_id!=0):
-			export(self.kernel_id)
-			direction(self.kernel_id,'in')
+	def __init__(self,connector="D11",position="first",id="CH1"):
+		if (position=="first"): 
+			pin=self.line_first[id]
+		else:
+			pin=self.line_second[id]
+			
+		self.kernel_id = get_kernel_id(connector,pin)
+
+		export(self.kernel_id)
+		direction(self.kernel_id,'in')
+
+		iopath=get_gpio_path(self.kernel_id)
+		if os.path.exists(iopath): 
+			self.fd = open(iopath + '/value','r')
+		
+	def get(self):
+		if self.fd!=None:
+			self.fd.seek(0)
+			a=self.fd.read()
+			if int(a)==0:
+				return False
+			else:
+				return True
+		return False
 
 	def state(self):
-		if self.kernel_id<>-1:
-			iopath='/sys/class/gpio/gpio' + str(self.kernel_id)
-			if os.path.exists(iopath): 
-				f = open(iopath + '/value','r')
-				a=f.read()
-				f.close()
-				if int(a)==0:
-					return False
-				else:
-					return True
-		return False
+		return self.get()
+
+	def wait_edge(self,fd,callback):
+		counter=0	
+		po = select.epoll()
+		po.register(fd,select.EPOLLET)
+		while True:
+			events = po.poll()
+			if counter>0:	
+				callback()
+			counter=counter+1
+
+	def set_edge(self,value,callback):
+		if self.fd!=None:
+			set_edge(self.kernel_id,value)
+			thread.start_new_thread(self.wait_edge,(self.fd,callback))
+			return
+		else:		
+			thread.exit()
+
+
 
 class Daisy19():
 
