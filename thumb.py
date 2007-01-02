@@ -2,8 +2,8 @@ import os, sys
 import Image
 
 size = 256, 256
-inpath="artisti"
-outpath="prova"
+inpath="slides"
+outpath="slides_thumb"
 
 for infile in os.listdir(inpath):
 	outfile = infile
