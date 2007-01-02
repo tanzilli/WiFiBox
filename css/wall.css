@@ -107,6 +107,7 @@ html, body {
 	font-size: 40pt;
 	color: white;
 	z-index: 5;
+	text-shadow: 2px 2px 4px black;
 }
 
 #titolo_2 {
@@ -115,4 +116,5 @@ html, body {
 	font-size: 30pt;
 	color: white;
 	z-index: 4;
+	text-shadow: 2px 2px 4px black;
 }
