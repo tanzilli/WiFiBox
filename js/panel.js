@@ -23,31 +23,13 @@ var artisti=[
 	["milici_buzzurro_cafiso.jpg","G.Milici, F.Buzzurro, F.Cafiso","Chitarra, Sax, Armonica"],
 	["finger1.jpg","Peter Finger","Chitarra Finger Picking"],
 	["segre_veneziano.jpg","E. Segre, I. Veneziano","Pianoforte e Chitarra Classica"],
-	["veneziano1.jpg","Irene Veneziano","Pianoforte"],
+	["veneziano1.jpg","Irene Veneziano",""],
 	["borda_palombo.jpg","L. Borda, G. Palombo","Duo acustico"],
 	["borda1.jpg","Luis Borda","Chitarra Classica"],
 	["palombo1.jpg","Giovanni Palombo","Chitarra Acustica"],
 	["buzzurro1.jpg","Francesco Buzzurro","Chitarra Classica"],
 ];
 
-var veneziano=[
-	["veneziano1.jpg","Irene Veneziano","Pianoforte"],
-	["veneziano2.jpg","Irene Veneziano","Pianoforte"],
-	["veneziano3.jpg","Irene Veneziano","Pianoforte"],
-	["galluppi1.jpg","Sonata n.5 in Do maggiore","(Baldassare Galluppi 1706-1785)"],
-	["respighi1.jpg","Notturno","(Ottorino Respighi 1879-1936)"],
-	["chopin1.jpg","Scherzo op 31","(Fryderyk Chopin 1810-1849)"],
-	["camille1.jpg","Etude op 111 n.6 Toccata","(Camille Saint-Saens 1835-1921)"],
-];
-
-var gallucci=[
-	["regino1.jpg","Zapateado","(Regino Sainz De La Maza 1896-1981)"], 
-	["eduardo1.jpg","Bolero","(Eduardo Sainz De La Maza 1903-1982)"], 
-	["albeniz1.jpg","Torre Bermeja","(Isaac Albeniz 1860-1909)"],
-	["albeniz2.jpg","Granada","(Isaac Albeniz 1860-1909)"],
-	["barrios1.jpg","Sueno en la foresta","(Augustine Barrios Mangore 1885-1944)"],
-	["giuliani1.jpg","Grande Ouverture Op 61","(Mauro Giuliani 1781-1829)"],
-];
 
 function ShowSlidesThumbnail(slide_div,slide_array) {
 	var contents="";
