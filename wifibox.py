@@ -16,12 +16,11 @@ def lineno():
     return inspect.currentframe().f_back.f_lineno
 
 clients = []
+smartphones = []
  
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
 	def open(self):
 		clients.append(self)
-
-		
 		print "Websocket opened"
 
 	def on_message(self, message):
@@ -40,16 +39,28 @@ class SlidesList(tornado.web.RequestHandler):
 		b=json.dumps(a)
 		self.write(b)
 
+# Lista degli smartphones connessi
+class SmartphonesList(tornado.web.RequestHandler):
+	def get(self):
+		print smartphones
+		self.write("Ciao")
+
 def redirect(self, status_code, exception=None, **kwargs):
 	return("<meta http-equiv='refresh' content='0; url=/'>");
-
+	
+def hitcounter(self):
+	if self.request.uri=="/":
+		smartphones.append(self.request.remote_ip)
+	return
 
 def main():
 	print "hello, this is line number", lineno()
 
 	tornado.web.StaticFileHandler.get_error_html=redirect;
+	tornado.web.StaticFileHandler.prepare=hitcounter;
 
 	application = tornado.web.Application([
+		(r"/smartphones", SmartphonesList),
 		(r"/slideslist", SlidesList),
 		(r"/websocket", WebSocketHandler),
 		(r"/(.*)", tornado.web.StaticFileHandler, {"path": ".","default_filename": "index.html"})
