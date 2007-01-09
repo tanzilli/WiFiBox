@@ -1,5 +1,20 @@
 // Open a websocket with the server
-var wsCommand = new WebSocket("ws://" + location.host + "/websocket");
+var websocket = new WebSocket("ws://" + location.host + "/websocket");
+
+websocket.onmessage = function (message) {
+	console.log("receiving: " + message.data);
+	obj = JSON.parse(message.data);
+	
+	if (obj.cmd=="poll") {
+		$( ".poll_voice" ).each(function(index) {
+			if ($(this).val()==obj.text) {
+				counter=$(this).next().text();
+				counter++;
+				$(this).next().text(counter);
+			}
+		});
+	}	
+}
 
 function ShowSlidesThumbnail(slide_div,slide_array) {
 	var contents="";
@@ -33,22 +48,30 @@ $(document).ready(function() {
 	$(".slide").click(function() {
 		titolo_1=$(this).next().next().val();
 		titolo_2=$(this).next().next().next().next().val();
-		wsCommand.send('{"cmd":"titolo_1","text":"' + titolo_1 + '"}');
-		wsCommand.send('{"cmd":"titolo_2","text":"' + titolo_2 + '"}');
-		wsCommand.send('{"cmd":"slide","image":"' + '/slides/' + $(this).attr("title") + '"}');
+		websocket.send('{"cmd":"titolo_1","text":"' + titolo_1 + '"}');
+		websocket.send('{"cmd":"titolo_2","text":"' + titolo_2 + '"}');
+		websocket.send('{"cmd":"slide","image":"' + '/slides/' + $(this).attr("title") + '"}');
 	});
 
 	$("#poll").click(function() {
-		wsCommand.send('{"cmd":"poll","text":"Vota il BIS !!"}');
+		websocket.send('{"cmd":"clearpoll"}');
+		
+		$( ".poll_voice" ).each(function(index) {
+			//console.log(index + ": " + $(this).val() );
+			websocket.send('{"cmd":"addpoll","text":"' + $(this).val() + '"}');
+			$(this).next().text("0");
+		});
+		
+		websocket.send('{"cmd":"showpoll"}');
 	});
 	
 	
 	myInterval=setInterval(function() {
 		if ($("#presentation").is(':checked')) {
 			console.log('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
-			wsCommand.send('{"cmd":"titolo_1","text":"' + slideSet[slideSet_index][slide_index][1] + '"}');
-			wsCommand.send('{"cmd":"titolo_2","text":"' + slideSet[slideSet_index][slide_index][2] + '"}');
-			wsCommand.send('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
+			websocket.send('{"cmd":"titolo_1","text":"' + slideSet[slideSet_index][slide_index][1] + '"}');
+			websocket.send('{"cmd":"titolo_2","text":"' + slideSet[slideSet_index][slide_index][2] + '"}');
+			websocket.send('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
 			
 			slide_index++;
 			if (slide_index==slideSet[slideSet_index].length) {
