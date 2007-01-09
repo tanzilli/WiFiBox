@@ -16,10 +16,15 @@ function ShowSlidesThumbnail(slide_div,slide_array) {
 	$(slide_div).html(contents);
 }
 
+
 $(document).ready(function() {
+	slideSet=[sfondi,artisti];
+	slideSet_index=0;
+	slide_index=0;
+	
 	$("#tabs").tabs();
-	ShowSlidesThumbnail("#sfondi",sfondi);
 	ShowSlidesThumbnail("#artisti",artisti);
+	ShowSlidesThumbnail("#sfondi",sfondi);
 	ShowSlidesThumbnail("#veneziano",veneziano);
 	ShowSlidesThumbnail("#gallucci",gallucci);
 	ShowSlidesThumbnail("#segre",segre);
@@ -36,4 +41,31 @@ $(document).ready(function() {
 	$("#poll").click(function() {
 		wsCommand.send('{"cmd":"poll","text":"Vota il BIS !!"}');
 	});
+	
+	
+	myInterval=setInterval(function() {
+		if ($("#presentation").is(':checked')) {
+			console.log('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
+			wsCommand.send('{"cmd":"titolo_1","text":"' + slideSet[slideSet_index][slide_index][1] + '"}');
+			wsCommand.send('{"cmd":"titolo_2","text":"' + slideSet[slideSet_index][slide_index][2] + '"}');
+			wsCommand.send('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
+			
+			slide_index++;
+			if (slide_index==slideSet[slideSet_index].length) {
+				slide_index=0;
+				slideSet_index++;
+				if (slideSet_index==slideSet.length) {
+					slideSet_index=0;
+				}
+			}
+			
+		} else {
+			console.log("Not Checked");
+			slide_index=0;
+			slideSet_index=0;
+		}
+
+	},10000);
+	
+	
 });	
