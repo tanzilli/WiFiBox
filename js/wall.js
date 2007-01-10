@@ -72,6 +72,8 @@ function OpenWebSocket() {
 $(document).ready(function() {
 	websocket=OpenWebSocket();
 
+	// Controlla a intervalli regolari se la connessione 
+	// Winsocket e' attiva
 	setInterval(function(){
 		if (websocket.readyState > 1) {
 			console.log("is closed");

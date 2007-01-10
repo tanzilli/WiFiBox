@@ -53,18 +53,37 @@ $(document).ready(function() {
 		websocket.send('{"cmd":"slide","image":"' + '/slides/' + $(this).attr("title") + '"}');
 	});
 
-	$("#poll").click(function() {
+	$("#addpollitem").click(function() {
+		if ($(".poll_voice" ).length<10) {
+			next_index=$(".poll_voice" ).length+1;
+			$("#pollitemdiv" ).append("<label>" + next_index + "</label><input class='poll_voice' type='text'/><label>0</label><br/>");
+		}
+	});
+		
+	$("#removepollitem").click(function() {
+		if ($(".poll_voice" ).length>2) {
+			$(".poll_voice" ).last().prev().remove();
+			$(".poll_voice" ).last().next().next().remove();
+			$(".poll_voice" ).last().next().remove();
+			$(".poll_voice" ).last().remove();
+		}
+	});
+
+	$("#startpoll").click(function() {
 		websocket.send('{"cmd":"clearpoll"}');
 		
 		$( ".poll_voice" ).each(function(index) {
-			//console.log(index + ": " + $(this).val() );
 			websocket.send('{"cmd":"addpoll","text":"' + $(this).val() + '"}');
-			$(this).next().text("0");
 		});
 		
 		websocket.send('{"cmd":"showpoll"}');
 	});
 	
+	$("#resetpollcounters").click(function() {
+		$( ".poll_voice" ).each(function(index) {
+			$(this).next().text("0");
+		});
+	});
 	
 	myInterval=setInterval(function() {
 		if ($("#presentation").is(':checked')) {
@@ -83,12 +102,8 @@ $(document).ready(function() {
 			}
 			
 		} else {
-			console.log("Not Checked");
 			slide_index=0;
 			slideSet_index=0;
 		}
-
 	},10000);
-	
-	
 });	
