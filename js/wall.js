@@ -21,22 +21,22 @@ var anExit= [
 function OpenWebSocket() {
 	websocket = new WebSocket("ws://" + location.host + "/websocket");
 	websocket.onmessage = function (message) {
-		console.log("receiving: " + message.data);
+		//console.log("receiving: " + message.data);
 		obj = JSON.parse(message.data);
-		console.log("cmd=: " + obj.cmd);
-		console.log("image=: " + obj.image);
+		//console.log("cmd=: " + obj.cmd);
+		//console.log("image=: " + obj.image);
 
 		if (obj.cmd=="slide") {
 			inIndex=Math.floor((Math.random()*anEntrance.length));
 			outIndex=Math.floor((Math.random()*anExit.length));
 			
 			$('#banner').addClass('animated ' + anExit[outIndex]);
-			console.log(anEntrance[inIndex]);
-			console.log(anExit[outIndex]);
+			//console.log(anEntrance[inIndex]);
+			//console.log(anExit[outIndex]);
 			var wait = window.setTimeout( function(){
 					$('#banner').removeClass()
 					$('#banner_img').attr('src',obj.image);
-					console.log("receiving: " + obj.image);
+					//console.log("receiving: " + obj.image);
 					
 					$('#banner').addClass('animated ' + anEntrance[inIndex]);
 					var wait = window.setTimeout( function(){
@@ -53,10 +53,19 @@ function OpenWebSocket() {
 			$("#titolo_1").html("<span id='tlt_titolo_1' data-in-effect='fadeInLeftBig'>" + obj.text + "</span>");
 			$('#tlt_titolo_1').textillate();
 		}
+		
 		if (obj.cmd=="titolo_2") {
 			$('#titolo_2').removeClass();
 			$("#titolo_2").html("<span id='tlt_titolo_2' data-in-effect='fadeInLeftBig'>" + obj.text + "</span>");
 			$('#tlt_titolo_2').textillate();
+		}
+
+		if (obj.cmd=="wallrefresh") {
+			console.log(obj.data.length);
+			obj.data.forEach(function(entry) {
+				console.log(entry.item);
+				console.log(entry.perc);
+			});
 		}
 	};
 	

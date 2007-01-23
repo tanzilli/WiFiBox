@@ -1,13 +1,11 @@
-
 function OpenWebSocket() {
 	var websocket = new WebSocket("ws://" + location.host + "/websocket");
 	
 	websocket.onmessage=function(message) {
 		obj = JSON.parse(message.data);
+		
 		if (obj.cmd=="clearpoll") {
 			$("#poll_button_div").html("");
-			$("#poll_button_div").trigger('create');
-			$.mobile.changePage("#poll", "pop");
 		}	
 
 		if (obj.cmd=="addpoll") {
@@ -18,8 +16,8 @@ function OpenWebSocket() {
 
 		if (obj.cmd=="showpoll") {
 			$("#poll_button_div").trigger('create');
-			
 			$.mobile.changePage("#poll", "pop");
+			//$("#poll").trigger('create');
 			
 			$(".poll_button").click(function() {
 				console.log($(this).text());
@@ -39,7 +37,6 @@ $(document).ready(function() {
 		if (websocket.readyState > 1) {
 			websocket=OpenWebSocket();
 			console.log("Riapro")
-
 		} else {
 		}			
 	},3000);

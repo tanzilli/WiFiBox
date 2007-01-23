@@ -5,15 +5,27 @@ websocket.onmessage = function (message) {
 	console.log("receiving: " + message.data);
 	obj = JSON.parse(message.data);
 	
+	// Conteggia i voti in arrivo
 	if (obj.cmd=="poll") {
+		// Aggiorna i contatori
+		total=0
 		$( ".poll_voice" ).each(function(index) {
 			if ($(this).val()==obj.text) {
 				counter=$(this).next().text();
 				counter++;
 				$(this).next().text(counter);
 			}
+			total+=parseInt($(this).next().text());
+		});
+
+		// Aggiorna le percentuali
+		$( ".poll_voice" ).each(function(index) {
+			perc=Math.round(parseInt($(this).next().text())*100/total);
+			$(this).next().next().next().text(perc);
 		});
 	}	
+
+
 }
 
 function ShowSlidesThumbnail(slide_div,slide_array) {
@@ -56,14 +68,17 @@ $(document).ready(function() {
 	$("#addpollitem").click(function() {
 		if ($(".poll_voice" ).length<10) {
 			next_index=$(".poll_voice" ).length+1;
-			$("#pollitemdiv" ).append("<label>" + next_index + "</label><input class='poll_voice' type='text'/><label>0</label><br/>");
+			$("#pollitemdiv" ).append("<label>" + next_index + "</label><input class='poll_voice' type='text'/><label>0</label><label> | </label> <label>0</label><label>%</label><br/>");
 		}
 	});
 		
 	$("#removepollitem").click(function() {
 		if ($(".poll_voice" ).length>2) {
 			$(".poll_voice" ).last().prev().remove();
-			$(".poll_voice" ).last().next().next().remove();
+			$(".poll_voice" ).last().next().remove();
+			$(".poll_voice" ).last().next().remove();
+			$(".poll_voice" ).last().next().remove();
+			$(".poll_voice" ).last().next().remove();
 			$(".poll_voice" ).last().next().remove();
 			$(".poll_voice" ).last().remove();
 		}
@@ -82,12 +97,38 @@ $(document).ready(function() {
 	$("#resetpollcounters").click(function() {
 		$( ".poll_voice" ).each(function(index) {
 			$(this).next().text("0");
+			$(this).next().next().next().text("0");
 		});
 	});
+
+	$("#wallrefresh").click(function() {
+		message='{' + '"cmd":"wallrefresh"' + ',';
+		message+='"data": [';
+		$( ".poll_voice" ).each(function(index) {
+			message+='{';
+			
+			item=$(this).val();
+			message+='"item":"' + item + '"' ;
+
+			message+=',';
+			
+			perc=$(this).next().next().next().text();
+			message+='"perc":"' + perc + '"' ;
+			
+						
+			message+='},';
+		});
+		message=message.slice(0, -1);
+		message+=']';
+		message+='}';
+		console.log(message);
+		websocket.send(message);
+	});
+
 	
 	myInterval=setInterval(function() {
 		if ($("#presentation").is(':checked')) {
-			console.log('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
+			//console.log('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
 			websocket.send('{"cmd":"titolo_1","text":"' + slideSet[slideSet_index][slide_index][1] + '"}');
 			websocket.send('{"cmd":"titolo_2","text":"' + slideSet[slideSet_index][slide_index][2] + '"}');
 			websocket.send('{"cmd":"slide","image":"' + '/slides/' + slideSet[slideSet_index][slide_index][0] + '"}');
