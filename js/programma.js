@@ -1,7 +1,7 @@
 var sfondi=[
-	["banner1.jpg","Auditorium di Santa Scolastica","5-8 Settembre 2013"],
+	["banner1.jpg","Auditorium Varrone","5-8 Settembre 2013"],
 	["rieti1.jpg","Teatro Flavio Vespasiano",""],
-	["santascolastica1.jpg","Auditorium di Santa Scolastica",""],
+	["santascolastica1.jpg","Auditorium Varrone",""],
 	["chitarra1.jpg","Rieti Guitar Festival","IIIa Edizione"],
 	["chitarra2.jpg","Rieti Guitar Festival","http://www.rietiguitarfestival.com"],
 	["chitarra3.jpg","Rieti Guitar Festival","http://www.rietiguitarfestival.com"],
@@ -35,7 +35,7 @@ var casularo_damiani=[
 ];
 
 var segre=[
-	["weiss1.jpg","Giaccona","(Sylvius Leopold Weiss 1686-1750)"],
+	["weiss1.jpg","Ciaccona","(Sylvius Leopold Weiss 1686-1750)"],
 	["giuliani1.jpg","dalle 'Giulianate': Op.148 l'Armonia","(Mauro Giuliani 1781-1829)"],
 	["giuliani2.jpg","dalle 'Giulianate': Op.148 la Melanconia","(Mauro Giuliani 1781-1829)"],
 	["giuliani3.jpg","dalle 'Giulianate': Op.148 la Risoluzione","(Mauro Giuliani 1781-1829)"],
@@ -58,4 +58,7 @@ var gallucci=[
 	["albeniz2.jpg","Granada","(Isaac Albeniz 1860-1909)"],
 	["barrios1.jpg","Sueno en la foresta","(Augustine Barrios Mangore 1885-1944)"],
 	["giuliani1.jpg","Grande Ouverture Op 61","(Mauro Giuliani 1781-1829)"],
+	["rio.jpg","Rio","(Leonardo Gallucci)"],
+	["cielo.jpg","Il Mare e il Cielo","(Leonardo Gallucci)"],
+	["maestrale.jpg","Maestrale","(Leonardo Gallucci)"],
 ];
