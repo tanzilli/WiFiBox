@@ -1,22 +1,41 @@
+// Open a websocket with the server
+var wsCommand = new WebSocket("ws://" + location.host + "/websocket");
+
+function ShowThumbnail(slideslist) {
+	htmlcontents="";
+	for (var slide in slideslist) {
+		console.log(slideslist[slide]);
+		htmlcontents+="<table>";
+		htmlcontents+="<tr>";
+		htmlcontents+="<td>";
+		htmlcontents+="<img class='slide' src='/slides/" + slideslist[slide] + "' width='240'/>";
+		htmlcontents+="</td>";
+		htmlcontents+="<td>";
+		htmlcontents+="<button class='thumbnaillive' image='/slides/" + slideslist[slide] + "'>Live</button>";
+		htmlcontents+="</td>";
+		htmlcontents+="</tr>";
+		htmlcontents+="</table>";
+		htmlcontents+="<br/>";
+	}	
+	$("#thumbnaillist").html(htmlcontents);
+	$(".thumbnaillive").click(function() {
+		console.log($(this).attr("image"));
+		wsCommand.send('{"cmd":"slide","slide":"' + $(this).attr("image") + '"}');
+	});
+}
+
 $(document).ready(function() {
-	var wsCommand = new WebSocket("ws://" + location.host + "/websocket");
-	console.log("Ci sono");
-
-	function changeSlide(image) {
-		$("#slide").attr("src", image);
-	}
-	
-	// Receiving a message from the server
-	wsCommand.onmessage = function (message) {
-		console.log("receiving: " + message.data);
-	};
-
-
-	$("#tasto1").click(function(){
-		wsCommand.send('{"cmd":"slide","slide":"/slides/img001.jpg"}');	
-	});	
-
-	$("#tasto2").click(function(){
-		wsCommand.send('{"cmd":"slide","slide":"/slides/img002.jpg"}');	
-	});	
+	// Load the slides list
+	$.ajax({
+		dataType: "json",
+		url: "/slideslist",
+		type: "get",
+		success: function (data,stato) {
+			slideslist=data;
+			ShowThumbnail(slideslist);
+	    },
+    	error: function (richiesta,stato,errori) {
+        	alert("Error: " + stato);
+    	}
+	});
 });	
