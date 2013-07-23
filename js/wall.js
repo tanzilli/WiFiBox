@@ -23,6 +23,12 @@ function changeSlide(image) {
 }
 
 $(document).ready(function() {
+	$("#sergio").click(function() {
+		$('.tlt').textillate();
+		console.log("hai");
+	});	
+
+	
 	websocket=OpenWebSocket();
 
 	setInterval(function(){

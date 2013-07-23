@@ -95,3 +95,22 @@ html, body {
 	position: absolute;
 }
 
+#titolo {
+	position: absolute;
+	z-index: 4;
+	left: 300px; 
+	bottom: 350px;
+	font-weight:bold;
+	font-size: 40pt;
+	color: black;
+}
+
+#contenuto {
+	position: absolute;
+	z-index: 4;
+	left: 300px; 
+	bottom: 300px;
+	font-size: 30pt;
+	color: white;
+}
+
