@@ -18,16 +18,30 @@ function OpenWebSocket() {
 	return websocket;
 }
 
-function changeSlide(image) {
-	$("#slide").attr("src", image);	
-}
-
 $(document).ready(function() {
-	$("#sergio").click(function() {
-		$('.tlt').textillate();
-		console.log("hai");
+
+	$("#text_in").click(function() {
+		$("#titolo").html("<span id='tlt_titolo' data-in-effect='fadeInLeftBig'>Leonardo Gallucci</span>");
+		$('#tlt_titolo').textillate();
+		$("#contenuto").html("<span id='tlt_contenuto' data-in-effect='fadeInLeftBig'>Sonorità Ladispolesi e altri componimenti in musica dal medioevo ad oggi.</span>");
+		$('#tlt_contenuto').textillate();
+
+		$('#titolo').removeClass('animated bounceOutLeft');
+		$('#contenuto').removeClass('animated bounceOutRight');
+
+		$('#artista').removeClass('animated bounceOutRight');
+		$('#artista').addClass('animated bounceInRight');
+		$('#artista').html("<img src='/slides/gallucci_in_piedi.png' />");
+
+		
 	});	
 
+	$("#text_out").click(function() {
+		$('#titolo').addClass('animated bounceOutLeft');
+		$('#contenuto').addClass('animated bounceOutRight');
+		$('#artista').removeClass('animated bounceInRight');
+		$('#artista').addClass('animated bounceOutRight');
+	});	
 	
 	websocket=OpenWebSocket();
 
