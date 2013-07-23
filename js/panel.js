@@ -25,6 +25,12 @@ function ShowThumbnail(slideslist) {
 }
 
 $(document).ready(function() {
+	
+	$("#reloadbutton").click(function() {
+		console.log("Reload");
+		window.location.reload(true);
+	});
+	
 	// Load the slides list
 	$.ajax({
 		dataType: "json",
