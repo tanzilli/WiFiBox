@@ -38,7 +38,7 @@ def main():
 		(r"/websocket", WebSocketHandler),
 		(r"/(.*)", tornado.web.StaticFileHandler, {"path": ".","default_filename": "index.html"}),
 	])
-	application.listen(80)
+	application.listen(8888)
  
 
 	mainLoop = tornado.ioloop.IOLoop.instance()
