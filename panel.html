@@ -11,8 +11,20 @@
 </head> 
 
 <body> 
-	<button id="reloadbutton">Reload</button>
+	<button onclick=clearAll()>Clear all</button>
+	<button onclick=copertina()>Copertina</button>
+	<button onclick=liveAll()>Live all</button>
 	<div id="thumbnaillist">
 	</div>
+	<div id="titolatrice">
+		<fieldset>
+			<legend>Titolatrice:</legend>
+			Titolo 1 <button id="titolo_1_live">Live !</button><input id="titolo_1_text" type="text"/>
+			<hr/>
+			Titolo 2 <button id="titolo_2_live">Live !</button><input id="titolo_2_text" type="text"/>
+			<hr/>
+			Titolo 3 <button id="titolo_3_live">Live !</button><input id="titolo_3_text" type="text"/>
+		 </fieldset>	
+	 </div>
 </body>
 </html>

@@ -37,9 +37,9 @@ html, body {
 #banner {
 	z-index: 3;
 	position: absolute;
-	left: 10%;
-	top: 5px;
-	width:80%;
+	left: 0px;
+	top: 0px;
+	width:100%;
 }
 
 #banner img {
@@ -91,22 +91,30 @@ html, body {
 	position: absolute;
 }
 
-#titolo {
+#spazio_testo {
 	position: absolute;
-	z-index: 4;
-	left: 200px; 
-	top: 200px;
+	top: 40%;
+	right: 5%;
+	left: 5%;
+}
+
+#titolo_1 {
+	position: relative;
 	font-weight:bold;
 	font-size: 40pt;
 	color: black;
 }
 
-#contenuto {
-	position: absolute;
-	z-index: 4;
-	left: 200px; 
-	top: 260px;
+#titolo_2 {
+	position: relative;
+	font-weight:bold;
 	font-size: 30pt;
 	color: white;
 }
 
+#titolo_3 {
+	position: relative;
+	font-weight:bold;
+	font-size: 30pt;
+	color: blue;
+}

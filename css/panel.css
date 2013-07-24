@@ -3,6 +3,23 @@ html, body {
 	padding: 0px;
 	width  : 100%;
 	height : 100%;
-	background-color: darkgrey;
+	background-color: #EBA742;
 }
 
+#thumbnaillist {
+	width: 240px;
+	position: absolute;
+	z-index: 0;
+	left: 10px;
+}
+
+#titolatrice {
+	position: absolute;
+	z-index: 0;
+	left: 260px;
+	right: 10px;
+}
+
+#titolatrice input {
+	width: 100%;
+}

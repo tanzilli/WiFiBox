@@ -5,8 +5,38 @@ function OpenWebSocket() {
 		obj = JSON.parse(message.data);
 
 		if (obj.cmd=="slide") {
-			changeSlide(obj.slide);
+			$('#banner').addClass('animated bounceOutRight');
+			var wait = window.setTimeout( function(){
+					$('#banner').removeClass()
+					$('#banner_img').attr('src',obj.slide);
+					$('#banner').addClass('animated bounceInLeft');
+					var wait = window.setTimeout( function(){
+						$('#banner').removeClass()},
+						1300
+					);
+				},
+				1300
+			);
 		}
+
+		if (obj.cmd=="titolo_1") {
+			$('#titolo_1').removeClass();
+			$("#titolo_1").html("<span id='tlt_titolo_1' data-in-effect='fadeInLeftBig'>" + obj.text + "</span>");
+			$('#tlt_titolo_1').textillate();
+		}
+		if (obj.cmd=="titolo_2") {
+			$('#titolo_2').removeClass();
+			$("#titolo_2").html("<span id='tlt_titolo_2' data-in-effect='fadeInLeftBig'>" + obj.text + "</span>");
+			$('#tlt_titolo_2').textillate();
+		}
+		if (obj.cmd=="titolo_3") {
+			$('#titolo_3').removeClass();
+			$("#titolo_3").html("<span id='tlt_titolo_3' data-in-effect='fadeInLeftBig'>" + obj.text + "</span>");
+			$('#tlt_titolo_3').textillate();
+		}
+
+
+
 	};
 	
 	websocket.onopen = function() 	{
@@ -19,30 +49,6 @@ function OpenWebSocket() {
 }
 
 $(document).ready(function() {
-
-	$("#text_in").click(function() {
-		$("#titolo").html("<span id='tlt_titolo' data-in-effect='fadeInLeftBig'>Leonardo Gallucci</span>");
-		$('#tlt_titolo').textillate();
-		$("#contenuto").html("<span id='tlt_contenuto' data-in-effect='fadeInLeftBig'>Sonorità Ladispolesi e altri componimenti in musica dal medioevo ad oggi.</span>");
-		$('#tlt_contenuto').textillate();
-
-		$('#titolo').removeClass('animated bounceOutLeft');
-		$('#contenuto').removeClass('animated bounceOutRight');
-
-		$('#artista').removeClass('animated bounceOutRight');
-		$('#artista').addClass('animated bounceInRight');
-		$('#artista').html("<img src='/slides/gallucci_in_piedi.png' />");
-
-		
-	});	
-
-	$("#text_out").click(function() {
-		$('#titolo').addClass('animated bounceOutLeft');
-		$('#contenuto').addClass('animated bounceOutRight');
-		$('#artista').removeClass('animated bounceInRight');
-		$('#artista').addClass('animated bounceOutRight');
-	});	
-	
 	websocket=OpenWebSocket();
 
 	setInterval(function(){
