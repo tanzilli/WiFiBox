@@ -11,11 +11,12 @@
 </head> 
 
 <body> 
-	<button onclick=clearAll()>Clear all</button>
-	<button onclick=copertina()>Copertina</button>
 	<button onclick=liveAll()>Live all</button>
+	
+	
 	<div id="thumbnaillist">
 	</div>
+	
 	<div id="titolatrice">
 		<fieldset>
 			<legend>Titolatrice:</legend>
@@ -23,8 +24,32 @@
 			<hr/>
 			Titolo 2 <button id="titolo_2_live">Live !</button><input id="titolo_2_text" type="text"/>
 			<hr/>
-			Titolo 3 <button id="titolo_3_live">Live !</button><input id="titolo_3_text" type="text"/>
 		 </fieldset>	
+		<select class="select_text" size="20">
+			<option value="">Blank</option>
+			<option value="5-8 Settembre 2013" name="banner.png">Auditorium di Santa Scolastica</option>
+			<option value="Flauto e Liuto" name="casularo_damiani.png">E. Casularo, A. Damiani</option>
+			<option value="Chitarra Classica" name="segre1.png">Emanuele Segre</option>
+			<option value="Chitarra classica" name="gallucci1.jpg">Leonardo Gallucci</option>
+			<option value="Sax" name="cafiso1.png">Francesco Cafiso</option>
+			<option value="Chitarra, Sax, Armonica" name="milici_buzzurro_cafiso.png">G.Milici, F.Buzzurro, F.Cafiso</option>
+			<option value="Chitarra Finger Picking" name="finger1.jpg">Peter Finger</option>
+			<option value="Pianoforte e Chitarra Classica" name="segre_veneziano.png">E. Segre, I. Veneziano</option>
+			<option name="veneziano1.png" value="Pianoforte">Irene Veneziano</option>
+			<option value="Duo acustico" name="borda_palombo.png">L. Borda, G. Palombo</option>
+			<option value="Chitarra Classica" name="borda1.png">Luis Borda</option>
+			<option value="Chitarra Acustica" name="palombo.png">Giovanni Palombo</option>
+			<option value="Chitarra Classica" name="buzzurro1.png">Franceco Buzzurro</option>
+			<option>Inizio concerto ore 18:00</option>
+			<option>Inizio concerto ore 21:00</option>
+			<option value="Lo staff del Festival">Arrivederci a domani</option>
+		</select>	
+		<select class="select_text" id="irene_veneziano" size="20">
+			<option name="veneziano2.png" value="(Galluppi)">Sonata n.5 in Do maggiore</option>
+			<option name="veneziano3.png" value="(Ottorino Respighi)">Notturno</option>
+			<option name="chopin1.png" value="(Fryderyk Chopin)">Scherzo op 31</option>
+			<option name="veneziano1.png" value="(Camille Saint-Saens)">Etude op 111 n.6 Toccata</option>
+		</select>	
 	 </div>
 </body>
 </html>

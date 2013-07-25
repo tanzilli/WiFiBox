@@ -7,7 +7,7 @@ html, body {
 }
 
 #thumbnaillist {
-	width: 240px;
+	width: 120px;
 	position: absolute;
 	z-index: 0;
 	left: 10px;
@@ -16,10 +16,15 @@ html, body {
 #titolatrice {
 	position: absolute;
 	z-index: 0;
-	left: 260px;
-	right: 10px;
+	left: 135px;
 }
 
 #titolatrice input {
 	width: 100%;
+}
+
+#programmi {
+	position: absolute;
+	z-index: 0;
+	left: 450px;
 }

@@ -72,6 +72,7 @@ html, body {
 	bottom: 20px;
 	font-size: x-large;
 	z-index: 5;
+	color: white;
 }
 
 #logo_festival_rieti {
@@ -93,7 +94,7 @@ html, body {
 
 #spazio_testo {
 	position: absolute;
-	top: 40%;
+	top: 50%;
 	right: 5%;
 	left: 5%;
 }
@@ -102,7 +103,8 @@ html, body {
 	position: relative;
 	font-weight:bold;
 	font-size: 40pt;
-	color: black;
+	color: white;
+	z-index: 5;
 }
 
 #titolo_2 {
@@ -110,11 +112,5 @@ html, body {
 	font-weight:bold;
 	font-size: 30pt;
 	color: white;
-}
-
-#titolo_3 {
-	position: relative;
-	font-weight:bold;
-	font-size: 30pt;
-	color: blue;
+	z-index: 4;
 }

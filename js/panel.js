@@ -4,26 +4,17 @@ var wsCommand = new WebSocket("ws://" + location.host + "/websocket");
 function liveAll() {
 	wsCommand.send('{"cmd":"titolo_1","text":"' + $("#titolo_1_text").val() + '"}');
 	wsCommand.send('{"cmd":"titolo_2","text":"' + $("#titolo_2_text").val() + '"}');
-	wsCommand.send('{"cmd":"titolo_3","text":"' + $("#titolo_3_text").val() + '"}');	
 }
 
-function copertina() {
-	$("#titolo_1_text").val("Auditorium di Santa Scolastica");
-	$("#titolo_2_text").val("5-9 Settembre 2013");
-	$("#titolo_3_text").val("");
-}
-
-function clearAll() {
-	$("#titolo_1_text").val("");
-	$("#titolo_2_text").val("");
-	$("#titolo_3_text").val("");
+function sendSlide(slide) {
+	wsCommand.send('{"cmd":"slide","slide":"/artisti/' + slide + '"}');
 }
 
 function ShowThumbnail(slideslist) {
 	htmlcontents="";
 	for (var slide in slideslist) {
 		console.log(slideslist[slide]);
-		htmlcontents+="<img class='slide' src='/slides/" + slideslist[slide] + "' width='240'/>";
+		htmlcontents+="<img class='slide' src='/artisti/" + slideslist[slide] + "' width='120' title='" + slideslist[slide] + "'/>";
 		htmlcontents+="<br/>";
 	}	
 	$("#thumbnaillist").html(htmlcontents);
@@ -36,10 +27,26 @@ function ShowThumbnail(slideslist) {
 	$("#titolo_2_live").click(function() {
 		wsCommand.send('{"cmd":"titolo_2","text":"' + $("#titolo_2_text").val() + '"}');
 	});
-	$("#titolo_3_live").click(function() {
-		wsCommand.send('{"cmd":"titolo_3","text":"' + $("#titolo_3_text").val() + '"}');
+	$(".select_text").click(function() {
+		//alert($(this).find('option:selected').text());
+		titolo_1=$(this).find('option:selected').text();
+		titolo_2=$(this).val();
+		if (titolo_1=="Blank") {
+			$("#titolo_1_text").val("");
+			$("#titolo_2_text").val("");
+		} else {
+			$("#titolo_1_text").val(titolo_1);
+			$("#titolo_2_text").val(titolo_2);
+		}	
+		liveAll();
+		slide_name=$(this).find('option:selected').attr("name");
+		console.log(slide_name)
+		if (slide_name!=undefined) {
+			sendSlide(slide_name);
+		} else {
+			sendSlide("banner.png");
+		}	
 	});
-
 }
 
 $(document).ready(function() {

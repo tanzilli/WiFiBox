@@ -1,3 +1,24 @@
+var anEntrance= [
+	"bounceIn",
+	"bounceInUp",
+	"bounceInDown",
+	"bounceInLeft",
+	"bounceInRight",
+	"rotateIn",
+	"rollIn"
+];
+
+var anExit= [
+	"bounceOut",
+	"bounceOutUp",
+	"bounceOutDown",
+	"bounceOutLeft",
+	"bounceOutRight",
+	"rotateOut",
+	"rollOut"
+];
+
+
 function OpenWebSocket() {
 	websocket = new WebSocket("ws://" + location.host + "/websocket");
 	websocket.onmessage = function (message) {
@@ -5,11 +26,16 @@ function OpenWebSocket() {
 		obj = JSON.parse(message.data);
 
 		if (obj.cmd=="slide") {
-			$('#banner').addClass('animated bounceOutRight');
+			inIndex=Math.floor((Math.random()*anEntrance.length));
+			outIndex=Math.floor((Math.random()*anExit.length));
+			
+			$('#banner').addClass('animated ' + anExit[outIndex]);
+			console.log(anEntrance[inIndex]);
+			console.log(anExit[outIndex]);
 			var wait = window.setTimeout( function(){
 					$('#banner').removeClass()
 					$('#banner_img').attr('src',obj.slide);
-					$('#banner').addClass('animated bounceInLeft');
+					$('#banner').addClass('animated ' + anEntrance[inIndex]);
 					var wait = window.setTimeout( function(){
 						$('#banner').removeClass()},
 						1300
@@ -29,14 +55,6 @@ function OpenWebSocket() {
 			$("#titolo_2").html("<span id='tlt_titolo_2' data-in-effect='fadeInLeftBig'>" + obj.text + "</span>");
 			$('#tlt_titolo_2').textillate();
 		}
-		if (obj.cmd=="titolo_3") {
-			$('#titolo_3').removeClass();
-			$("#titolo_3").html("<span id='tlt_titolo_3' data-in-effect='fadeInLeftBig'>" + obj.text + "</span>");
-			$('#tlt_titolo_3').textillate();
-		}
-
-
-
 	};
 	
 	websocket.onopen = function() 	{

@@ -11,6 +11,10 @@
 </head> 
 
 <body> 
+
+<!-- MAIN --->
+
+
 <div data-role="page" id="welcome" data-fullscreen="true">
  
     <div data-role="header">
@@ -20,51 +24,34 @@
     <div data-role="content"> 
         <p>Benvenuti al Festival della Chitarra di Rieri.</p>      
 
+		<ul data-role="listview">
+			<li><a href="#concerti">Concerti</a></li>
+			<li><a href="#masterclass">Master class</a></li>
+			<!-- altre voci qui -->
+		</ul>
+
+
 		<div data-role="collapsible">
-		   <h3>Calendario dei concerti</h3>
+		   <h3>Master Class</h3>
 		 
 			<div data-role="collapsible">
 			   <h3>Giovedi 5</h3>
-			   <p>Contenuto collassato di default e visibile su richiesta.</p>
+			   <p>Contenuto in allestimento</p>
 			</div>
 		 
 			<div data-role="collapsible">
 			   <h3>Venerdi 6</h3>
-			   <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
+			   <p>Contenuto in allestimento</p>
 			</div>
 
 			<div data-role="collapsible">
 			   <h3>Sabato 8</h3>
-			   <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
+			   <p>Contenuto in allestimento</p>
 			</div>
 
 			<div data-role="collapsible">
 			   <h3>Domenica 9</h3>
-			   <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
-			</div>
-		</div>	 
-
-		<div data-role="collapsible">
-		   <h3>Calendario Master Class</h3>
-		 
-			<div data-role="collapsible">
-			   <h3>Giovedi 5</h3>
-			   <p>Contenuto collassato di default e visibile su richiesta.</p>
-			</div>
-		 
-			<div data-role="collapsible">
-			   <h3>Venerdi 6</h3>
-			   <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
-			</div>
-
-			<div data-role="collapsible">
-			   <h3>Sabato 8</h3>
-			   <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
-			</div>
-
-			<div data-role="collapsible">
-			   <h3>Domenica 9</h3>
-			   <p>Altro Contenuto collassato di default e visibile su richiesta.</p>
+			   <p>Contenuto in allestimento</p>
 			</div>
 		</div>	 
 
@@ -88,28 +75,99 @@
     </div>
 </div>
 
-<div data-role="page" id="calendario">
- 
-    <div data-role="header">
+
+<!-- CONCERTI --->
+
+<div data-role="page" id="concerti">
+     <div data-role="header">
 		<a href="index.html" data-rel="back">Indietro</a>
-        <h1>Calendario</h1>
+        <h1>Concerti</h1>
     </div>
  
     <div data-role="content"> 
-        <a href="#giovedi_5" data-role="button" >Giovedi 5</a>  
-		<br/>     
-        <a href="#venerdi_6" data-role="button">Venerdi 6</a>       
-		<br/>     
-        <a href="#sabato_7" data-role="button">Sabato 8</a>       
-		<br/>     
-        <a href="#domenica_9" data-role="button">Domenica 9</a>       
-		<br/>     
-    </div>
+		<div data-role="collapsible">
+			<h3>Giovedi 5 settembre</h3>
 
+			<h4>Andrea Damiani, Enrico Casularo</h4>
+			<p>Liuto e Flauto</p>
+			<p>
+				Auditorium di Santa Scolastica<br/>
+				Ore 18:00 Ingresso libero
+			</p>
+
+			<h4>Emanuele Segre</h4>
+			<p>Chitarra Classica</p>
+			<p>
+				Auditorium di Santa Scolastica<br/>
+				Ore 21:00 Ingresso libero
+			</p>
+		</div>
+	 
+		<div data-role="collapsible">
+			<h3>Venerdi 6 settembre</h3>
+
+			<h4>Leonardo Gallucci</h4>
+			<p>Chitarra Classica e Chitarra 10 corde</p>
+			<p>
+				Auditorium di Santa Scolastica<br/>
+				Ore 18:00 Ingresso libero
+			</p>
+
+			<h4>Francesco Buzzurro, Francesco Cafiso, Giuseppe Milici</h4>
+			<p>Chitarra, Sassofono e Armonica</p>
+			<p>
+				Teatro Flavio Vespasiano<br/>
+				Ore 21:00
+			</p>
+		</div>
+
+		<div data-role="collapsible">
+			<h3>Sabato 7 settembre</h3>
+
+			<h4>Peter Finger</h4>
+			<p>Chitarra Finger Picking</p>
+			<p>
+				Auditorium di Santa Scolastica<br/>
+				Ore 18:00 Ingresso libero
+			</p>
+
+			<h4>Irene Veneziano, Emanuele Segre</h4>
+			<p>Pianoforte e Chitarra</p>
+			<p>
+				Auditorium di Santa Scolastica<br/>
+				Ore 21:00 Ingresso libero
+			</p>
+		</div>
+
+		<div data-role="collapsible">
+			<h3>Domenica 8 settembre</h3>
+
+			<h4>Luis Borda, Giovanni Palombo</h4>
+			<p>Chitarra Classica e Acustica</p>
+			<p>
+				Auditorium di Santa Scolastica<br/>
+				Ore 18:00 Ingresso libero
+			</p>
+		</div>
+	</div>
 
     <div data-role="footer">
         <h4>Rieti Guitar Festival 2013</h4>
     </div>
+
+
+<!-- MASTER CLASS --->
+
+<div data-role="page" id="masterclass">
+     <div data-role="header">
+		<a href="index.html" data-rel="back">Indietro</a>
+        <h1>Master class</h1>
+    </div>
+
+    <div data-role="footer">
+        <h4>Rieti Guitar Festival 2013</h4>
+    </div>
+
 </div>
 
 
