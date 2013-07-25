@@ -6,8 +6,8 @@ html, body {
 }
 
 #all {
-	width: 800px;
-	height: 600px;
+	width: 1024px;
+	height: 768px;
 	position: absolute;
 	z-index: 0;
 	border-style:solid;
@@ -23,8 +23,8 @@ html, body {
 }
 
 #background {
-	width: 800px;
-	height: 600px;
+	width: 1024px;
+	height: 768px;
 	position: absolute;
 	z-index: 0;
 }
