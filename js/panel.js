@@ -50,6 +50,7 @@ function ShowThumbnail(slideslist) {
 }
 
 $(document).ready(function() {
+	$("#tabs").tabs();
 	// Load the slides list
 	$.ajax({
 		dataType: "json",

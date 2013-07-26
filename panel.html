@@ -7,49 +7,69 @@
 <title>Control panel</title> 
 <script src="js/jquery-2.0.3.min.js"></script>
 <script src="js/panel.js"></script>
-<link rel="stylesheet"  href="css/panel.css" />  
+<link rel="stylesheet"  href="css/panel.css" />	
+<!--jquery-ui-->
+<link rel="stylesheet" href="css/jquery.ui.all.css">
+<script src="js/jquery.ui.core.js"></script>
+<script src="js/jquery.ui.widget.js"></script>
+<script src="js/jquery.ui.tabs.js"></script>
+<link rel="stylesheet" href="css/demos.css">
+  
 </head> 
 
-<body> 
-	<button onclick=liveAll()>Live all</button>
-	
-	
-	<div id="thumbnaillist">
+<body>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Titolatrice</a></li>
+		<li><a href="#tabs-2">Sfondi</a></li>
+		<li><a href="#tabs-3">Slides</a></li>
+	</ul>
+
+	<div id="tabs-2">
+		<div id="thumbnaillist">
+		</div>
 	</div>
 	
-	<div id="titolatrice">
-		<fieldset>
-			<legend>Titolatrice:</legend>
-			Titolo 1 <button id="titolo_1_live">Live !</button><input id="titolo_1_text" type="text"/>
-			<hr/>
-			Titolo 2 <button id="titolo_2_live">Live !</button><input id="titolo_2_text" type="text"/>
-			<hr/>
-		 </fieldset>	
-		<select class="select_text" size="20">
-			<option value="">Blank</option>
-			<option value="5-8 Settembre 2013" name="banner.png">Auditorium di Santa Scolastica</option>
-			<option value="Flauto e Liuto" name="casularo_damiani.png">E. Casularo, A. Damiani</option>
-			<option value="Chitarra Classica" name="segre1.png">Emanuele Segre</option>
-			<option value="Chitarra classica" name="gallucci1.jpg">Leonardo Gallucci</option>
-			<option value="Sax" name="cafiso1.png">Francesco Cafiso</option>
-			<option value="Chitarra, Sax, Armonica" name="milici_buzzurro_cafiso.png">G.Milici, F.Buzzurro, F.Cafiso</option>
-			<option value="Chitarra Finger Picking" name="finger1.jpg">Peter Finger</option>
-			<option value="Pianoforte e Chitarra Classica" name="segre_veneziano.png">E. Segre, I. Veneziano</option>
-			<option name="veneziano1.png" value="Pianoforte">Irene Veneziano</option>
-			<option value="Duo acustico" name="borda_palombo.png">L. Borda, G. Palombo</option>
-			<option value="Chitarra Classica" name="borda1.png">Luis Borda</option>
-			<option value="Chitarra Acustica" name="palombo.png">Giovanni Palombo</option>
-			<option value="Chitarra Classica" name="buzzurro1.png">Franceco Buzzurro</option>
-			<option>Inizio concerto ore 18:00</option>
-			<option>Inizio concerto ore 21:00</option>
-			<option value="Lo staff del Festival">Arrivederci a domani</option>
-		</select>	
-		<select class="select_text" id="irene_veneziano" size="20">
-			<option name="galluppi1.jpg" value="(Baldassare Galluppi 1706-1785)">Sonata n.5 in Do maggiore</option>
-			<option name="respighi1.jpg" value="(Ottorino Respighi 1879-1936)">Notturno</option>
-			<option name="chopin1.jpg" value="(Fryderyk Chopin 1810-1849)">Scherzo op 31</option>
-			<option name="camille.jpg" value="(Camille Saint-Saens 1835-1921)">Etude op 111 n.6 Toccata</option>
-		</select>	
+	<div id="tabs-1">
+		<div id="titolatrice">
+			<button onclick=liveAll()>Live all</button>
+			<br/>
+			<br/>
+			<b>Titolo 1</b> <button id="titolo_1_live">Live !</button><input id="titolo_1_text" type="text"/>
+			<br/>
+			<br/>
+			<b>Titolo 2</b> <button id="titolo_2_live">Live !</button><input id="titolo_2_text" type="text"/>
+			<br/>
+			<br/>
+			<br/>
+			<select class="select_text" size="20">
+				<option value="">Blank</option>
+				<option value="5-8 Settembre 2013" name="banner.png">Auditorium di Santa Scolastica</option>
+				<option value="Flauto e Liuto" name="casularo_damiani.png">E. Casularo, A. Damiani</option>
+				<option value="Chitarra Classica" name="segre1.png">Emanuele Segre</option>
+				<option value="Chitarra classica" name="gallucci1.jpg">Leonardo Gallucci</option>
+				<option value="Sax" name="cafiso1.png">Francesco Cafiso</option>
+				<option value="Chitarra, Sax, Armonica" name="milici_buzzurro_cafiso.png">G.Milici, F.Buzzurro, F.Cafiso</option>
+				<option value="Chitarra Finger Picking" name="finger1.jpg">Peter Finger</option>
+				<option value="Pianoforte e Chitarra Classica" name="segre_veneziano.png">E. Segre, I. Veneziano</option>
+				<option name="veneziano1.png" value="Pianoforte">Irene Veneziano</option>
+				<option value="Duo acustico" name="borda_palombo.png">L. Borda, G. Palombo</option>
+				<option value="Chitarra Classica" name="borda1.png">Luis Borda</option>
+				<option value="Chitarra Acustica" name="palombo.png">Giovanni Palombo</option>
+				<option value="Chitarra Classica" name="buzzurro1.png">Franceco Buzzurro</option>
+				<option>Inizio concerto ore 18:00</option>
+				<option>Inizio concerto ore 21:00</option>
+				<option value="Lo staff del Festival">Arrivederci a domani</option>
+			</select>	
+			<select class="select_text" id="irene_veneziano" size="20">
+				<option name="galluppi1.jpg" value="(Baldassare Galluppi 1706-1785)">Sonata n.5 in Do maggiore</option>
+				<option name="respighi1.jpg" value="(Ottorino Respighi 1879-1936)">Notturno</option>
+				<option name="chopin1.jpg" value="(Fryderyk Chopin 1810-1849)">Scherzo op 31</option>
+				<option name="camille.jpg" value="(Camille Saint-Saens 1835-1921)">Etude op 111 n.6 Toccata</option>
+			</select>	
+		 </div>
 	 </div>
+ </div>
 </body>
 </html>

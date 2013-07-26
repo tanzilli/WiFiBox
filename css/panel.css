@@ -3,28 +3,19 @@ html, body {
 	padding: 0px;
 	width  : 100%;
 	height : 100%;
-	background-color: #EBA742;
 }
 
 #thumbnaillist {
 	width: 120px;
-	position: absolute;
 	z-index: 0;
-	left: 10px;
 }
 
 #titolatrice {
-	position: absolute;
-	z-index: 0;
-	left: 135px;
 }
 
 #titolatrice input {
-	width: 100%;
+	width: 60%;
 }
 
 #programmi {
-	position: absolute;
-	z-index: 0;
-	left: 450px;
 }
