@@ -1,5 +1,6 @@
 // Open a websocket with the server
 var wsCommand = new WebSocket("ws://" + location.host + "/websocket");
+var thumbSize=120;
 
 function liveAll() {
 	wsCommand.send('{"cmd":"titolo_1","text":"' + $("#titolo_1_text").val() + '"}');
@@ -11,11 +12,18 @@ function sendSlide(slide) {
 }
 
 function ShowThumbnail(slideslist) {
+	spazio_disponibile=$(document).width();
+	thumbPerRiga=Math.floor(spazio_disponibile/thumbSize);
+
 	htmlcontents="";
+	tCount=0;
 	for (var slide in slideslist) {
-		console.log(slideslist[slide]);
-		htmlcontents+="<img class='slide' src='/artisti/" + slideslist[slide] + "' width='120' title='" + slideslist[slide] + "'/>";
-		htmlcontents+="<br/>";
+		htmlcontents+="<img class='slide' src='/artisti/" + slideslist[slide] + "' width='" + thumbSize + "' title='" + slideslist[slide] + "'/>";
+		tCount++;
+		if (tCount==thumbPerRiga) {	
+			htmlcontents+="<br/>";
+			tCount=0;
+		}
 	}	
 	$("#thumbnaillist").html(htmlcontents);
 	$(".slide").click(function() {
@@ -40,7 +48,6 @@ function ShowThumbnail(slideslist) {
 		}	
 		liveAll();
 		slide_name=$(this).find('option:selected').attr("name");
-		console.log(slide_name)
 		if (slide_name!=undefined) {
 			sendSlide(slide_name);
 		} else {
