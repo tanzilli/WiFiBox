@@ -69,6 +69,7 @@ function ShowThumbnail(slideslist) {
 
 $(document).ready(function() {
 	$("#tabs").tabs();
+
 	// Load the slides list
 	$.ajax({
 		dataType: "json",
@@ -81,5 +82,9 @@ $(document).ready(function() {
     	error: function (richiesta,stato,errori) {
         	alert("Error: " + stato);
     	}
+	});
+
+	$("#poll").click(function() {
+		wsCommand.send('{"cmd":"poll","text":"Vota il BIS !!"}');
 	});
 });	
