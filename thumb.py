@@ -3,7 +3,7 @@ import Image
 
 size = 128, 128
 inpath="artisti"
-outpath="artisti_thumb"
+outpath="prova"
 
 for infile in os.listdir(inpath):
 	outfile = infile
