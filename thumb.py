@@ -1,7 +1,7 @@
 import os, sys
 import Image
 
-size = 128, 128
+size = 256, 256
 inpath="artisti"
 outpath="prova"
 
