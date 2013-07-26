@@ -1,6 +1,6 @@
 // Open a websocket with the server
 var wsCommand = new WebSocket("ws://" + location.host + "/websocket");
-var thumbSize=120;
+var thumbSize=128;
 
 function liveAll() {
 	wsCommand.send('{"cmd":"titolo_1","text":"' + $("#titolo_1_text").val() + '"}');
@@ -18,7 +18,7 @@ function ShowThumbnail(slideslist) {
 	htmlcontents="";
 	tCount=0;
 	for (var slide in slideslist) {
-		htmlcontents+="<img class='slide' src='/artisti/" + slideslist[slide] + "' width='" + thumbSize + "' title='" + slideslist[slide] + "'/>";
+		htmlcontents+="<img class='slide' src='/artisti_thumb/" + slideslist[slide] + "' width='" + thumbSize + "' title='" + slideslist[slide] + "'/>";
 		tCount++;
 		if (tCount==thumbPerRiga) {	
 			htmlcontents+="<br/>";
