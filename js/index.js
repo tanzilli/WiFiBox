@@ -1,6 +1,13 @@
 var websocket = new WebSocket("ws://" + location.host + "/websocket");
 
-console.log("Partito !");
+console.log("Ci sono");
+
+$(document).ready(function() {
+	$(".include-file").each (function () {
+		$(this).load($(this).attr('file'));
+		console.log("Ciao");
+	});
+});
 
 websocket.onmessage=function(message) {
 	obj = JSON.parse(message.data);
