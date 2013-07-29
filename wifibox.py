@@ -38,13 +38,11 @@ class SlidesList(tornado.web.RequestHandler):
 		self.write(b)
 
 def redirect(self, status_code, exception=None, **kwargs):
-	print "hello, this is line number", lineno()
 	return("<meta http-equiv='refresh' content='0; url=/'>");
 
 
 def main():
 	print "hello, this is line number", lineno()
-
 
 	tornado.web.StaticFileHandler.get_error_html=redirect;
 
