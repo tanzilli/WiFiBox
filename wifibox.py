@@ -8,6 +8,11 @@ import tornado.gen
 from   tornado.options import define, options
 from   random import randint
 import json
+import inspect
+
+def lineno():
+    """Returns the current line number in our program."""
+    return inspect.currentframe().f_back.f_lineno
 
 clients = []
  
@@ -32,14 +37,24 @@ class SlidesList(tornado.web.RequestHandler):
 		b=json.dumps(a)
 		self.write(b)
 
+def redirect(self, status_code, exception=None, **kwargs):
+	print "hello, this is line number", lineno()
+	return("<meta http-equiv='refresh' content='0; url=/'>");
+
+
 def main():
+	print "hello, this is line number", lineno()
+
+
+	tornado.web.StaticFileHandler.get_error_html=redirect;
+
 	application = tornado.web.Application([
 		(r"/slideslist", SlidesList),
 		(r"/websocket", WebSocketHandler),
-		(r"/(.*)", tornado.web.StaticFileHandler, {"path": ".","default_filename": "index.html"}),
+		(r"/(.*)", tornado.web.StaticFileHandler, {"path": ".","default_filename": "index.html"})
 	])
 	application.listen(80)
- 
+	
 
 	mainLoop = tornado.ioloop.IOLoop.instance()
 	#scheduler = tornado.ioloop.PeriodicCallback(sendSlide,1000,io_loop=mainLoop)
