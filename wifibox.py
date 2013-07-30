@@ -9,6 +9,14 @@ from   tornado.options import define, options
 from   random import randint
 import json
 import inspect
+import ablib
+
+lcd = ablib.Daisy24(0)
+lcd.backlighton()
+
+lcd.setcurpos(0,0)
+lcd.putstring("WiFi HotSpot")
+
 
 def lineno():
     """Returns the current line number in our program."""
@@ -19,6 +27,10 @@ clients = []
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
 	def open(self):
 		clients.append(self)
+
+		lcd.setcurpos(0,1)
+		lcd.putstring("Client: %3d" % (clients.__len__()))
+		
 		print "Websocket opened"
 
 	def on_message(self, message):
@@ -29,6 +41,8 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
 	def on_close(self):
 		clients.remove(self)		
 		print "Websocket closed"
+		lcd.setcurpos(0,1)
+		lcd.putstring("Client: %3d" % (clients.__len__()))
 
 # Invia la lista delle slides
 class SlidesList(tornado.web.RequestHandler):

@@ -4,9 +4,9 @@ var thumbSize=128;
 var slideList=[];
 
 var slides=[
-	["Copertina generica","banner1.jpg","None","None"],
+	["Copertina generica","banner1.jpg","none","none"],
 	["Copertina Auditorium","banner1.jpg","Auditorium di Santa Scolastica","5-8 Settembre 2013"],
-	["Infopoint 1","wifiinfopoint.jpg","None","None"],
+	["Infopoint 1","wifiinfopoint.jpg","none","none"],
 	["Casularo/Damiani","casularo_damiani.jpg","E. Casularo, A. Damiani","Flauto e Liuto"],
 	["Segre","segre1.jpg","Emanuele Segre","Chitarra Classica"],
 	["Gallucci","gallucci1.jpg","Leonardo Gallucci","Chitarra Classica"],
@@ -55,13 +55,19 @@ function ShowSlidesThumbnail() {
 	$(".slide").click(function() {
 		titolo_1=slides[$(this).attr("value")][2];
 		titolo_2=slides[$(this).attr("value")][3];
-		if (titolo_2=="notext") {
+
+		if (titolo_1=="none") {
 			$("#titolo_1_text").val("");
-			$("#titolo_2_text").val("");
 		} else {
 			$("#titolo_1_text").val(titolo_1);
+		}	
+
+		if (titolo_2=="none") {
+			$("#titolo_2_text").val("");
+		} else {
 			$("#titolo_2_text").val(titolo_2);
 		}	
+
 		wsCommand.send('{"cmd":"titolo_1","text":"' + $("#titolo_1_text").val() + '"}');
 		wsCommand.send('{"cmd":"titolo_2","text":"' + $("#titolo_2_text").val() + '"}');
 		wsCommand.send('{"cmd":"slide","image":"' + '/slides/' + $(this).attr("title") + '"}');
