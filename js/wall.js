@@ -18,12 +18,13 @@ var anExit= [
 	"rollOut"
 ];
 
-
 function OpenWebSocket() {
 	websocket = new WebSocket("ws://" + location.host + "/websocket");
 	websocket.onmessage = function (message) {
 		console.log("receiving: " + message.data);
 		obj = JSON.parse(message.data);
+		console.log("cmd=: " + obj.cmd);
+		console.log("image=: " + obj.image);
 
 		if (obj.cmd=="slide") {
 			inIndex=Math.floor((Math.random()*anEntrance.length));
@@ -34,7 +35,9 @@ function OpenWebSocket() {
 			console.log(anExit[outIndex]);
 			var wait = window.setTimeout( function(){
 					$('#banner').removeClass()
-					$('#banner_img').attr('src',obj.slide);
+					$('#banner_img').attr('src',obj.image);
+					console.log("receiving: " + obj.image);
+					
 					$('#banner').addClass('animated ' + anEntrance[inIndex]);
 					var wait = window.setTimeout( function(){
 						$('#banner').removeClass()},
